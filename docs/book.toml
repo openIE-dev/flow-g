@@ -1,0 +1,21 @@
+[book]
+title = "flowG"
+authors = ["David Charlot <david@openie.dev>"]
+description = "The flowG FunctionGraph IR — types, codegen, runtime, OpDispatch backends, energy receipts."
+language = "en"
+multilingual = false
+src = "src"
+
+[output.html]
+default-theme = "navy"
+preferred-dark-theme = "navy"
+git-repository-url = "https://github.com/openIE-dev/flow-g"
+git-repository-icon = "fa-github"
+edit-url-template = "https://github.com/openIE-dev/flow-g/edit/main/docs/{path}"
+site-url = "/flow-g/"
+
+[output.html.search]
+enable = true
+
+[output.html.fold]
+enable = true

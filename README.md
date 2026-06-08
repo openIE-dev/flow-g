@@ -2,6 +2,13 @@
 
 **A typed FunctionGraph IR for heterogeneous inference.**
 
+[![Release](https://github.com/openIE-dev/flow-g/actions/workflows/release.yml/badge.svg)](https://github.com/openIE-dev/flow-g/actions/workflows/release.yml)
+[![Quality](https://github.com/openIE-dev/flow-g/actions/workflows/quality.yml/badge.svg)](https://github.com/openIE-dev/flow-g/actions/workflows/quality.yml)
+[![Docs](https://github.com/openIE-dev/flow-g/actions/workflows/docs.yml/badge.svg)](https://openie-dev.github.io/flow-g)
+[![crates.io](https://img.shields.io/crates/v/flowg.svg)](https://crates.io/crates/flowg)
+[![License](https://img.shields.io/badge/license-BSL--1.1-blue.svg)](./LICENSE)
+
+
 flowG is the compiler IR + runtime substrate behind the openIE-dev ecosystem. It takes typed function graphs and dispatches them across CPU, Apple-silicon Metal, WGPU, AMX, and the OpDispatch backend family — with picojoule-budgeted per-op energy measurement built in.
 
 This is the **public release surface**. Source is private at [`openIE-dev/flow-g-core`](https://github.com/openIE-dev/flow-g-core) — 99 crates spanning the IR, codegen passes, OpDispatch leaves, model runtimes, and benchmarks.
