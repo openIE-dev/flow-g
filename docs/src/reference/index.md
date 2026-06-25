@@ -1,7 +1,7 @@
 # Reference
 
-flowG is small at its core: a closed set of node kinds, a set of wire kinds,
-and one extension point. Everything else composes from those.
+flowG is small at its core: a closed set of 25 node kinds, 11 wire kinds,
+and one extension point (`Custom(op)`). Everything else composes from those.
 
 For the embedding API (the Rust `flowg` crate), see
 [docs.rs/flowg](https://docs.rs/flowg).

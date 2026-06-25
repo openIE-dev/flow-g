@@ -21,7 +21,7 @@ This is the **public release surface**. Source is private at [`openIE-dev/flow-g
 
 | Binary | Purpose |
 |---|---|
-| `flowg` | The CLI: compile graphs, lower to backends, run + benchmark |
+| `flowg` | The CLI: make-sample, inspect, run (with energy receipts), import PyTorch FX, bench |
 | `flowg-serve` | HTTP serving for compiled graphs (model runtimes, kernels) |
 | `flowg-bench` | Per-op + per-graph benchmarking with energy receipts |
 
@@ -53,15 +53,14 @@ Platform support:
 ## Hello, flow-g
 
 ```bash
-# compile a graph from .fg to executable
-flowg compile examples/hello-graph/add.fg -o add
+# write a sample graph (a two-input `add`)
+flowg make-sample add.fg
 
-# lower to WGSL for WebGPU
-flowg emit --target wgsl examples/hello-graph/add.fg
+# inspect the typed graph — its nodes and resource-semantic wires
+flowg inspect add.fg
 
-# run with energy receipts
-flowg run examples/hello-graph/add.fg --record-energy receipt.json
-cat receipt.json | jq '.ops[] | {name, picojoules}'
+# run it — prints the energy receipt (total µJ, placement, determinism)
+flowg run add.fg
 ```
 
 See [`examples/`](./examples/) for runnable programs spanning every backend.

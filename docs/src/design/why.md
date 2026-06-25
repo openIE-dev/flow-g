@@ -38,9 +38,10 @@ for latency or memory.
 
 ## What that buys you
 
-- **Materialize to many languages.** A typed graph isn't tied to one surface
-  syntax; flowG can emit to many target languages from the same IR.
-- **Lower to many silicons.** CPU, Metal, WGPU, AMX share the IR.
+- **One graph, many surfaces.** lux, JMax, and Joule are different syntaxes
+  over the same IR — the graph is canonical, the language is a projection.
+- **Lower to many silicons.** CPU, Metal, WGPU, AMX share the IR; the emitters
+  target WGSL, WASM, ONNX, StableHLO, MLIR-linalg, Triton, and flowG's own .fg.
 - **Meter every operation.** Picojoule receipts, first-class.
 
 flowG is the substrate the openIE-dev language family compiles to — see
