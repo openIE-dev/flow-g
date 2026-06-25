@@ -40,8 +40,11 @@ for latency or memory.
 
 - **One graph, many surfaces.** lux, JMax, and Joule are different syntaxes
   over the same IR — the graph is canonical, the language is a projection.
-- **Lower to many silicons.** CPU, Metal, WGPU, AMX share the IR; the emitters
-  target WGSL, WASM, ONNX, StableHLO, MLIR-linalg, Triton, and flowG's own .fg.
+- **Materialize to dozens of languages.** From the same graph, flowG emits
+  source in ~38 languages (Rust, Python, Go, Haskell, C, Swift, …) — a
+  deterministic graph→text function, roundtrip-tested, no model in the loop.
+- **Lower to many silicons.** CPU, Metal, WGPU, AMX share the IR; the compute
+  emitters target WGSL, WASM, ONNX, StableHLO, MLIR-linalg, Triton, and .fg.
 - **Meter every operation.** Picojoule receipts, first-class.
 
 flowG is the substrate the openIE-dev language family compiles to — see

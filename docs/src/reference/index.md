@@ -1,7 +1,10 @@
 # Reference
 
-flowG is small at its core: a closed set of 25 node kinds, 11 wire kinds,
-and one extension point (`Custom(op)`). Everything else composes from those.
+flowG's kernel is small: **22 universal primitives** and **11 wire kinds** — a
+closed, fixed vocabulary for every programming pattern. This reference documents
+the `FunctionGraph` IR that realizes them; the Lux/compute projection extends the
+22 with tensor and aggregate nodes (`TensorLiteral`, `StructCreate`, …) and an
+`Custom(op)` extension point for kernels.
 
 For the embedding API (the Rust `flowg` crate), see
 [docs.rs/flowg](https://docs.rs/flowg).
