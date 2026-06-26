@@ -1,7 +1,7 @@
 [book]
 title = "flowG"
 authors = ["David Charlot <david@openie.dev>"]
-description = "The flowG FunctionGraph IR — types, codegen, runtime, OpDispatch backends, energy receipts."
+description = "The flowG FunctionGraph IR: types, codegen, runtime, OpDispatch backends, and energy receipts."
 language = "en"
 multilingual = false
 src = "src"
