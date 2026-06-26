@@ -20,18 +20,18 @@ Everything else is a surface over, or a consumer of, the same typed
 FunctionGraph IR. That is the whole point: one substrate, many fronts, one
 energy model.
 
-- **[lux-lang](https://openie-dev.github.io/lux-lang)** — a general-purpose,
+- **[lux-lang](https://openie-dev.github.io/lux-lang)**: a general-purpose,
   reactive language. Lux source compiles to flowG; the graph is what runs.
-- **[jmax](https://openie-dev.github.io/jmax)** — a math-native language for
+- **[jmax](https://openie-dev.github.io/jmax)**: a math-native language for
   numerical and scientific work, lowered to flowG so the same kernels and the
   same energy model apply.
-- **[joule-lang](https://openie-dev.github.io/joule-lang)** — an
+- **[joule-lang](https://openie-dev.github.io/joule-lang)**: an
   energy-budgeted, self-hosted language: energy limits are part of the program,
   enforced through flowG's metered dispatch.
-- **[jouledb](https://openie-dev.github.io/jouledb)** — the energy-metered
+- **[jouledb](https://openie-dev.github.io/jouledb)**: the energy-metered
   database. It stores graphs and records inference receipts, closing the loop
   between *what ran* and *what it cost*.
-- **substrate-energy** — the joule-accounting layer underneath flowG:
+- **substrate-energy**: the joule-accounting layer underneath flowG:
   IOReport on Apple Silicon, NVML on NVIDIA, RAPL on x86_64 Linux. Every op's
   picojoule cost flows from here.
 
