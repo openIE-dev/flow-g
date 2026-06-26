@@ -51,10 +51,10 @@ other axes a real program needs and closes the set at **22**:
 **Theorem vs. bet, said plainly:** Turing-completeness from a small set is trivial
 and proves nothing interesting. The real claim is *ergonomic completeness* — that
 these 22 express every *pattern* across paradigms without awkward encodings. That
-is an empirical bet, not a theorem, and the evidence for it is the ~38-language
-round trip: parse real code in any of them into these primitives, and materialize
-it back. *(The kernel is `inv-ai-codegraph::flowg::FlowgNodeKind`, pinned at 22 by
-test.)*
+is an empirical bet, not a theorem, and the evidence for it is the omni-language
+round trip: parse real code in any language with a tree-sitter grammar into these
+primitives, and materialize it back. *(The kernel is
+`inv-ai-codegraph::flowg::FlowgNodeKind`, pinned at 22 by test.)*
 
 ## 03 · Determinism — materialization is a pure function
 

@@ -38,11 +38,12 @@ for latency or memory.
 
 ## What that buys you
 
-- **One graph, many surfaces.** lux, JMax, and Joule are different syntaxes
-  over the same IR — the graph is canonical, the language is a projection.
-- **Materialize to dozens of languages.** From the same graph, flowG emits
-  source in ~38 languages (Rust, Python, Go, Haskell, C, Swift, …) — a
-  deterministic graph→text function, roundtrip-tested, no model in the loop.
+- **flowG is the omni-language.** It isn't a fixed number of languages. Its own
+  surfaces — lux, JMax, Joule — and any language with a tree-sitter grammar
+  (Rust, Python, Go, Haskell, C, Swift, …) are the same graph wearing different
+  syntax. The graph is canonical; every language is a projection.
+- **Materialize to any of them.** Emitting source is a deterministic graph→text
+  function, roundtrip-tested, no model in the loop — so the projections never drift.
 - **Lower to many silicons.** CPU, Metal, WGPU, AMX share the IR; the compute
   emitters target WGSL, WASM, ONNX, StableHLO, MLIR-linalg, Triton, and .fg.
 - **Meter every operation.** Picojoule receipts, first-class.
