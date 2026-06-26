@@ -1,9 +1,9 @@
 # Why flowG
 
-Most toolchains treat a program as text, compile it to one target, and forget
-what it cost to run. flowG makes three different choices.
+flowG makes three choices, each chosen for the value it returns — in time, energy,
+and cost.
 
-## 1. A program is a typed graph, not text
+## 1. A program is a typed graph — text is one view of it
 
 flowG's IR is a **FunctionGraph** — a typed dataflow graph of nodes and wires,
 not an AST or a flat token stream. Functions are first-class graph nodes with

@@ -6,7 +6,7 @@ flowG's claims aren't aesthetic. They fall out of five well-understood results �
 from information theory, computation theory, type theory, and physics. Here is the
 reasoning, including where a claim is a theorem and where it's an empirical bet.
 
-## 01 · Information theory — text is a structure-implicit projection
+## 01 · Information theory — the graph is the structure text represents
 
 A program is a typed graph `G = (V, E)`: nodes are operations and values, edges
 carry how those values relate. Writing it to a file is a serialization
@@ -22,16 +22,16 @@ source text  ──parse──▶  tokens
    = G                                (the graph the author already had in mind)
 ```
 
-Two facts make text the wrong canonical form. First, **it is redundant**: many
-strings denote the same graph (whitespace, ordering, names form equivalence classes
-with no semantic content), so `s` is not injective in reverse. Second, **it is
-structure-implicit**: bindings, types, ownership, and flow are not written down —
-the compiler re-derives them every build, and that re-derivation *is* the
-reconstruction of `G`.
+Two properties make the graph the natural shared form. First, text **is
+redundant**: many strings denote the same graph (whitespace, ordering, names form
+equivalence classes with no semantic content), so `s` is not injective in reverse.
+Second, text **is structure-implicit**: bindings, types, ownership, and flow are
+not written down — the compiler re-derives them every build, and that re-derivation
+*is* the reconstruction of `G`.
 
 flowG stores `G` — the canonical, structure-explicit form — and derives text on
-demand. The lossy step doesn't disappear; it moves to the edge of the system, where
-it belongs.
+demand. The re-derivation every build repeats becomes a one-time, reusable fact, so
+the whole toolchain shares one source instead of rebuilding it from text.
 
 ## 02 · Computation theory — a closed kernel of 22 primitives
 

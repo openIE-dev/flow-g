@@ -1,27 +1,27 @@
-# History — the idea is older than the tooling that buried it
+# History — an idea the field has been building toward
 
 > **▶ Interactive version:** [flowg-lang.dev/history](https://flowg-lang.dev/history) — the same lineage with a live interaction-net reducer you can poke at.
 
-"Code is structure, not text" is one of computing's oldest recurring dreams. It
-has been invented, half-built, and shelved for fifty years — each time defeated
-by the same thing: human friction with anything but a line of characters. flowG
-doesn't claim to have invented it. It builds the thing all of this work has been
-circling, now that the obstacle is lifting.
+"Code is structure" is one of computing's oldest and most beautiful ideas —
+explored by brilliant people for fifty years, each generation advancing it and
+each right for its time. flowG doesn't claim to have invented it. It builds on all
+of it, and the moment is finally right: parallel silicon everywhere, compute in
+the browser, and energy worth measuring.
 
-## Why the line won (1945)
+## Text built the modern world (1945)
 
-When von Neumann described the stored-program computer, the only I/O device was a
-teletype. Text was all we had: fetch one instruction, execute it, fetch the next.
-For eighty years that accident of history hardened into an axiom — editors,
-parsers, formatters, diffs, version control, an entire civilization of tools
-built on one assumption: **code is a stream of characters.**
+When von Neumann described the stored-program computer, the teletype made text the
+natural way to write and read code — and it was exactly right. For eighty years a
+whole civilization of wonderful tools grew on it: editors, parsers, formatters,
+diffs, version control. flowG keeps all of that. Text stays the surface people
+love; **the graph it represents becomes shared too.**
 
-## Why everything else became a graph (today)
+## Everything else became a graph (today)
 
 The silicon is parallel. The computation is a parallel graph. The intelligence we
 built on top — attention — is graph-structured. At every layer the world is
-relational and multidimensional. Only the source code still pretends it's a line.
-flowG removes the pretense and works at the structure directly.
+relational and multidimensional. flowG lets the source code share that shape too —
+working at the structure directly, while text stays the surface you read and write.
 
 ## The lineage — six threads, fifty years
 
@@ -54,9 +54,10 @@ breaking the build."
 Edit the tree, not the characters — so a program is never syntactically broken.
 Simonyi's "intentional tree with text as one projection" is almost exactly flowG's
 thesis, thirty years early.
-*Lesson:* it never beat text **for humans**, and the reasons were all human. Move
-the human out of the editing loop and the objection dissolves. That is why the
-idea is alive again.
+*Lesson:* people rightly loved text — fast to write, and the whole toolchain
+speaks it. flowG keeps text as a first-class surface and adds the graph beneath, so
+people and machines each work in the form that suits them. That is why the idea is
+ready now.
 
 ### 05 · ML graph IRs (2015 →)
 **Theano / TF1 · PyTorch & JAX (jaxpr) · ONNX · MLIR (Lattner, 2019) · XLA / StableHLO · TVM · IREE · Triton · GGML · MLX.**
@@ -93,13 +94,14 @@ Each validated a piece in isolation — embeddings, intermediate representations
 read-only graphs, pseudocode. The remaining work was to make the graph the source
 of truth, give it resource-typed wires, and meter it in joules.
 
-## Why now
+## Why now — the moment is right
 
-Projectional editing lost to text because people type faster in characters and
-every tool — diff, review, blame, the terminal — is text-shaped. None of those
-frictions bind a machine. At the same time the hardware is finally parallel
-everywhere, WebGPU put compute in the browser, and the energy cost of getting it
-wrong has become impossible to ignore.
+Text earned its place: people write it fast, and the whole toolchain — diff,
+review, blame, the terminal — speaks it beautifully. flowG keeps every bit of that
+and adds a shared graph beneath, so people keep their surface while every language
+and every chip gain one too. What's new is the timing: parallel silicon
+everywhere, WebGPU putting compute in the browser, and energy finally something we
+can measure and save.
 
 So this is not a claim of novelty. It's a claim of timing — and of cause. We're
 building the thing fifty years of brilliant work has been circling, in the open,
