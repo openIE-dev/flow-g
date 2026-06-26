@@ -13,6 +13,12 @@ flowG is the compiler IR + runtime substrate behind the openIE-dev ecosystem. It
 
 This is the **public release surface**. Source is private at [`openIE-dev/flow-g-core`](https://github.com/openIE-dev/flow-g-core) — 99 crates spanning the IR, codegen passes, OpDispatch leaves, model runtimes, and benchmarks.
 
+## Watch the film
+
+[![The Graph Coding Era — watch the film](assets/film-poster.jpg)](https://flowg-lang.dev/film)
+
+**[The Graph Coding Era](https://flowg-lang.dev/film)** — a 7½-minute narrated visual on the one unnecessary step between intent and silicon, and the bypass that removes it. Or read the [interactive explainers](https://flowg-lang.dev/how-it-works): [how it works](https://flowg-lang.dev/how-it-works) · [history](https://flowg-lang.dev/history) · [the math](https://flowg-lang.dev/math).
+
 ## Status
 
 > Release binaries + examples + documentation. flowG is **free to use software**, not an open-source project. See [LICENSE](./LICENSE) for the Business Source License 1.1 terms — converts to Apache-2.0 four years after each binary's release date.
