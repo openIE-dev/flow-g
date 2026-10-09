@@ -1,5 +1,14 @@
 name: Release
 
+# Builds the `flowg` CLI from the private openIE-dev/joulesperbit monorepo at
+# the requested tag and attaches the archives to a GitHub Release here.
+#
+# Tag push (v*):        build all targets, then create a DRAFT release.
+#                       Nothing is public until a maintainer clicks Publish.
+# workflow_dispatch:    build all targets and upload them as workflow
+#                       artifacts. A draft release is created only when
+#                       `draft_release` is checked.
+
 on:
   push:
     tags:
@@ -7,18 +16,35 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag to build (e.g. v0.1.0)'
+        description: 'joulesperbit ref to build: a tag (v0.1.1) for a release, or a full commit SHA for a dry run'
         required: true
         type: string
+      draft_release:
+        description: 'Also create a DRAFT GitHub Release (never published automatically)'
+        required: false
+        type: boolean
+        default: false
 
-# REPLACE these per-project:
 env:
-  # Path to the CLI crate inside joulesperbit
-  CLI_CRATE_PATH: crates/flowg-cli
-  # Name of the CLI binary that ends up in target/release/
+  CLI_PACKAGE: flowg-cli
   BIN_NAME: flowg
-  # Public name (what the tarball is named)
   RELEASE_NAME: flowg
+  # lux-flowg depends on inv-ai-compiler from the openIE-dev cargo registry.
+  # The workspace manifest names that registry (`registry = "openie"`,
+  # `[patch."openie"]`), so cargo cannot even parse it without this.
+  # The registry allows anonymous reads ("auth-required": false).
+  CARGO_REGISTRIES_OPENIE_INDEX: sparse+https://registry.openie.dev/api/v1/crates/
+  # Sibling repositories that joulesperbit workspace members path-depend on.
+  # flowg-cli itself uses none of them, but cargo loads every member's
+  # manifest (and its path deps) before it builds any package.
+  # Pinned to the commits the release was verified against; bump deliberately.
+  MANTLE_REF: 1dbb7d2228a78d67884ca30a31b8457e1578a91a  # openIE-dev/mantle            -> joulesperbit/mantle
+  OPENIE_CAD_REF: 0f9c555bd4f4379e7970d6d14c7a2efca9931712  # openIE-dev/openie-cad        -> openie-cad
+  INVISIBLE_FRAMEWORK_REF: 33b6447e0040f7584a72ca4b3cabe760f0d11379  # openIE-dev/invisible-framework -> invisible/invisible-framework
+  # openIE-dev/openie-fpga is a GitHub-only copy of the Forgejo repo with files
+  # >50 MB moved to LFS (history rewritten, so SHAs differ from Forgejo).
+  # fc7a054 == Forgejo 73d688a (klere-ternary-settling-cell), same message/author/date.
+  OPENIE_FPGA_REF: fc7a05428c2a29b530a76c25485b61706838bbc0  # openIE-dev/openie-fpga -> openie-fpga
 
 jobs:
   build:
@@ -28,20 +54,21 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - target: x86_64-apple-darwin
-            os: macos-14
-            archive: tar.gz
+          # Every leg builds natively (no cross). ort's download-binaries
+          # ships prebuilt ONNX Runtime only for these four of our targets
+          # (no x86_64-apple-darwin, no *-linux-musl in ort-sys 2.0.0-rc.11).
+          # The Linux prebuilt needs libstdc++ from GCC 14
+          # (`__cxa_call_terminate`): it fails to link on Ubuntu 22.04 /
+          # Debian 12 and links on Ubuntu 24.04.
           - target: aarch64-apple-darwin
             os: macos-14
             archive: tar.gz
-          - target: x86_64-unknown-linux-musl
-            os: ubuntu-latest
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-24.04
             archive: tar.gz
-            use-cross: true
-          - target: aarch64-unknown-linux-musl
-            os: ubuntu-latest
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-24.04-arm      # free arm64 runner for public repos
             archive: tar.gz
-            use-cross: true
           - target: x86_64-pc-windows-msvc
             os: windows-latest
             archive: zip
@@ -60,7 +87,7 @@ jobs:
       - name: Checkout public release surface
         uses: actions/checkout@v4
 
-      - name: Checkout private source
+      - name: Checkout private source (joulesperbit)
         uses: actions/checkout@v4
         with:
           repository: openIE-dev/joulesperbit
@@ -68,24 +95,80 @@ jobs:
           path: joulesperbit
           ref: ${{ steps.tag.outputs.tag }}
 
-      - name: Install Rust toolchain
-        uses: dtolnay/rust-toolchain@stable
+      # Layout must match the relative paths in joulesperbit's manifests:
+      #   joulesperbit/mantle/crates/...               (../../mantle/...)
+      #   openie-cad/crates/cad-udd                    (../../../openie-cad/...)
+      #   invisible/invisible-framework/crates/...     (../../../invisible/invisible-framework/...)
+      #   openie-fpga/crates/settle-conformance        (../../../openie-fpga/...)
+      - name: Checkout sibling mantle
+        uses: actions/checkout@v4
         with:
-          targets: ${{ matrix.target }}
+          repository: openIE-dev/mantle
+          token: ${{ secrets.JOULESPERBIT_READ_TOKEN }}
+          path: joulesperbit/mantle
+          ref: ${{ env.MANTLE_REF }}
 
-      - name: Install cross (Linux only)
-        if: matrix.use-cross
-        run: cargo install cross --locked
+      - name: Checkout sibling openie-cad
+        uses: actions/checkout@v4
+        with:
+          repository: openIE-dev/openie-cad
+          token: ${{ secrets.JOULESPERBIT_READ_TOKEN }}
+          path: openie-cad
+          ref: ${{ env.OPENIE_CAD_REF }}
+
+      - name: Checkout sibling invisible-framework
+        uses: actions/checkout@v4
+        with:
+          repository: openIE-dev/invisible-framework
+          token: ${{ secrets.JOULESPERBIT_READ_TOKEN }}
+          path: invisible/invisible-framework
+          ref: ${{ env.INVISIBLE_FRAMEWORK_REF }}
+
+      - name: Checkout sibling openie-fpga
+        uses: actions/checkout@v4
+        with:
+          repository: openIE-dev/openie-fpga
+          token: ${{ secrets.JOULESPERBIT_READ_TOKEN }}
+          path: openie-fpga
+          ref: ${{ env.OPENIE_FPGA_REF }}
+          # The build only loads crates/settle-conformance (zero-dep, no build.rs);
+          # nothing reads the LFS files, so don't spend LFS bandwidth on them.
+          lfs: false
+
+      # joulesperbit/rust-toolchain.toml pins the channel. Install exactly
+      # that toolchain with this leg's target so rustup's override (which
+      # applies inside joulesperbit/) has the target's std.
+      - name: Install pinned Rust toolchain
+        shell: bash
+        working-directory: joulesperbit
+        run: |
+          CHANNEL=$(sed -n 's/^channel *= *"\(.*\)"/\1/p' rust-toolchain.toml)
+          test -n "$CHANNEL"
+          rustup toolchain install "$CHANNEL" --profile minimal --target ${{ matrix.target }}
+          rustc -Vv
+          cargo -V
+
+      # flowg-op-blas links -lopenblas on Linux (crates/flowg-op-blas/build.rs).
+      - name: Install Linux build dependencies
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y libopenblas-dev
 
       - name: Build
         shell: bash
         working-directory: joulesperbit
+        run: cargo build --release --target ${{ matrix.target }} -p "$CLI_PACKAGE"
+
+      - name: Smoke test
+        shell: bash
         run: |
-          if [ "${{ matrix.use-cross }}" = "true" ]; then
-            cross build --release --target ${{ matrix.target }} -p "${CLI_CRATE_PATH##*/}"
-          else
-            cargo build --release --target ${{ matrix.target }} -p "${CLI_CRATE_PATH##*/}"
-          fi
+          EXT=""; [ "${{ runner.os }}" = "Windows" ] && EXT=".exe"
+          B="joulesperbit/target/${{ matrix.target }}/release/${BIN_NAME}${EXT}"
+          "$B" --version
+          "$B" make-sample "$RUNNER_TEMP/add.fg"
+          "$B" inspect "$RUNNER_TEMP/add.fg"
+          OUT=$("$B" run "$RUNNER_TEMP/add.fg" --backend cpu --input '{"x":1.5,"y":2.25}' | tr -d '\r')
+          echo "run -> $OUT"
+          test "$OUT" = "3.75"
 
       - name: Package
         shell: bash
@@ -95,38 +178,47 @@ jobs:
           BASE="${RELEASE_NAME}-${TAG#v}-${{ matrix.target }}"
           mkdir -p "$STAGE/$BASE"
 
-          if [ "${{ matrix.target }}" = "x86_64-pc-windows-msvc" ]; then
+          if [ "${{ runner.os }}" = "Windows" ]; then
             cp "joulesperbit/target/${{ matrix.target }}/release/${BIN_NAME}.exe" "$STAGE/$BASE/"
           else
             cp "joulesperbit/target/${{ matrix.target }}/release/${BIN_NAME}" "$STAGE/$BASE/"
           fi
 
-          cp LICENSE README.md "$STAGE/$BASE/" 2>/dev/null || true
+          cp LICENSE README.md "$STAGE/$BASE/"
 
+          # Both archive kinds contain the top-level directory $BASE/, which
+          # is what the crates.io stub's binstall bin-dir expects:
+          #   flowg-{version}-{target}/flowg{.exe}
           cd "$STAGE"
           if [ "${{ matrix.archive }}" = "zip" ]; then
-            (cd "$BASE" && 7z a -tzip "../${BASE}.zip" .)
-            mv "${BASE}.zip" "${{ github.workspace }}/"
-            (cd "${{ github.workspace }}" && shasum -a 256 "${BASE}.zip" > "${BASE}.zip.sha256")
+            ARCHIVE="${BASE}.zip"
+            7z a -tzip "$ARCHIVE" "$BASE"
           else
-            tar czf "${BASE}.tar.gz" "$BASE"
-            mv "${BASE}.tar.gz" "${{ github.workspace }}/"
-            (cd "${{ github.workspace }}" && shasum -a 256 "${BASE}.tar.gz" > "${BASE}.tar.gz.sha256")
+            ARCHIVE="${BASE}.tar.gz"
+            tar czf "$ARCHIVE" "$BASE"
           fi
-
-          ls -la "${{ github.workspace }}"/*${BASE}*
+          mv "$ARCHIVE" "${{ github.workspace }}/"
+          cd "${{ github.workspace }}"
+          if command -v sha256sum >/dev/null; then
+            sha256sum "$ARCHIVE" > "${ARCHIVE}.sha256"
+          else
+            shasum -a 256 "$ARCHIVE" > "${ARCHIVE}.sha256"
+          fi
+          ls -la "${ARCHIVE}"*
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.RELEASE_NAME }}-${{ matrix.target }}
+          if-no-files-found: error
           path: |
             ${{ env.RELEASE_NAME }}-*-${{ matrix.target }}.tar.gz*
             ${{ env.RELEASE_NAME }}-*-${{ matrix.target }}.zip*
 
   release:
-    name: Publish Release
+    name: Create draft release
     needs: build
+    if: github.event_name == 'push' || inputs.draft_release
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -144,9 +236,11 @@ jobs:
           find artifacts -type f \( -name '*.tar.gz' -o -name '*.zip' -o -name '*.sha256' \) -exec mv {} dist/ \;
           ls -la dist/
 
-      - name: Create GitHub Release
+      - name: Create draft GitHub Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          draft: true
           files: dist/*
           generate_release_notes: true
           fail_on_unmatched_files: true

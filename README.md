@@ -27,34 +27,40 @@ This is the **public release surface**. Source is private at [`openIE-dev/flow-g
 
 | Binary | Purpose |
 |---|---|
-| `flowg` | The CLI: make-sample, inspect, run (with energy receipts), import PyTorch FX, bench |
-| `flowg-serve` | HTTP serving for compiled graphs (model runtimes, kernels) |
-| `flowg-bench` | Per-op + per-graph benchmarking with energy receipts |
+| `flowg` | The CLI: make-sample, inspect, run (with energy receipts), import PyTorch FX, sign/verify, bench |
 
-Plus a Rust library, [`flowg`](https://crates.io/crates/flowg), for embedding.
+The [`flowg`](https://crates.io/crates/flowg) crate on crates.io is an installer stub for `cargo binstall`, not a library.
 
 ## Install
 
+Prebuilt binaries are attached to each [GitHub Release](https://github.com/openIE-dev/flow-g/releases).
+The fastest way to fetch the right one for your machine is
+[`cargo-binstall`](https://github.com/cargo-bins/cargo-binstall):
+
 ```bash
-# via cargo
-cargo install flowg
-
-# via cargo-binstall (prebuilt binary)
+cargo install cargo-binstall   # once, if you don't have it
 cargo binstall flowg
-
-# direct download
-curl -fsSL https://github.com/openIE-dev/flow-g/releases/latest/download/flowg-$(uname -s)-$(uname -m).tar.gz | tar xz
 ```
 
-Platform support:
+Or download the archive for your platform from the
+[latest release](https://github.com/openIE-dev/flow-g/releases/latest)
+(`flowg-<version>-<target>.tar.gz`, `.zip` on Windows), unpack it, and put
+`flowg-<version>-<target>/flowg` on your `PATH`.
 
-| Platform | Status |
+`cargo install flowg` does **not** build flowG: it compiles a small stub that
+prints these instructions and exits.
+
+Prebuilt targets:
+
+| Platform | Target |
 |---|---|
-| macOS arm64 (Apple Silicon) | shipping |
-| macOS x86_64 | shipping |
-| Linux x86_64 (musl) | shipping |
-| Linux aarch64 (musl) | shipping |
-| Windows x86_64 | shipping |
+| macOS arm64 (Apple Silicon) | `aarch64-apple-darwin` |
+| Linux x86_64 (glibc 2.39+, e.g. Ubuntu 24.04) | `x86_64-unknown-linux-gnu` |
+| Linux aarch64 (glibc 2.39+, e.g. Ubuntu 24.04) | `aarch64-unknown-linux-gnu` |
+| Windows x86_64 | `x86_64-pc-windows-msvc` |
+
+The Linux binaries link the system OpenBLAS: install it first
+(`sudo apt install libopenblas0` on Debian/Ubuntu).
 
 ## Hello, flow-g
 
@@ -65,8 +71,11 @@ flowg make-sample add.fg
 # inspect the typed graph: its nodes and resource-semantic wires
 flowg inspect add.fg
 
-# run it: prints the energy receipt (total µJ, placement, determinism)
-flowg run add.fg
+# run it on two inputs: prints 3.75
+flowg run add.fg --input '{"x": 1.5, "y": 2.25}'
+
+# run on the async scheduler and print the energy receipt on stderr
+flowg run add.fg --scheduler async --receipt --input '{"x": 1.5, "y": 2.25}'
 ```
 
 See [`examples/`](./examples/) for runnable programs spanning every backend.

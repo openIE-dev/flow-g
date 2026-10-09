@@ -6,9 +6,8 @@ Runnable example programs for flow-g. Each subdirectory is an independent exampl
 
 ```bash
 cargo binstall flowg
-# or
-cargo install flowg
 # or download from https://github.com/openIE-dev/flow-g/releases
+# (`cargo install flowg` only builds an installer stub)
 ```
 
 ## Examples

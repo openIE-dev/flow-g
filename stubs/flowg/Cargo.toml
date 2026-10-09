@@ -1,6 +1,6 @@
 [package]
 name = "flowg"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 rust-version = "1.74"
 description = "Typed FunctionGraph IR for heterogeneous inference — CPU + Apple Silicon Metal + WGPU + AMX. Stub installer; `cargo binstall flowg` fetches the real binary from GitHub Releases."
@@ -20,7 +20,9 @@ name = "flowg"
 path = "src/main.rs"
 
 [package.metadata.binstall]
-pkg-url = "{ repo }/releases/download/v{ version }/flowg-{ version }-{ target }.{ archive-suffix }"
+# `{ archive-suffix }` already includes the leading dot (".tgz", ".tar.gz",
+# ".zip"); for pkg-fmt "tgz" binstall tries both ".tgz" and ".tar.gz".
+pkg-url = "{ repo }/releases/download/v{ version }/flowg-{ version }-{ target }{ archive-suffix }"
 pkg-fmt = "tgz"
 bin-dir = "flowg-{ version }-{ target }/{ bin }{ binary-ext }"
 
