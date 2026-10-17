@@ -13,10 +13,10 @@ cargo install flowg
 
 ## Examples
 
-- [`hello-graph wgsl-codegen energy-receipt/`](./hello-graph wgsl-codegen energy-receipt/)
+- [`hello-graph/`](./hello-graph/)
+- [`wgsl-codegen/`](./wgsl-codegen/)
+- [`energy-receipt/`](./energy-receipt/)
 
 ## License
 
-Examples in this directory are licensed under **Apache-2.0** — copy them into your own projects without license contamination. See [LICENSE](./LICENSE) for the full text.
-
-This differs from the rest of this repository (binaries under BSL-1.1, documentation under CC-BY-4.0).
+Examples in this directory are licensed under MIT OR Apache-2.0, the same as the rest of this repository. See [LICENSE-MIT](../LICENSE-MIT) and [LICENSE-APACHE](../LICENSE-APACHE).

@@ -17,4 +17,4 @@ The output is a complete WGSL compute shader that you can drop into wgpu-rs.
 
 ## Next
 
-- [`../energy-receipt`](../energy-receipt) — measure picojoule cost on the WGPU target
+- [`../energy-receipt`](../energy-receipt), measure picojoule cost on the WGPU target

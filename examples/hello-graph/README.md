@@ -32,5 +32,5 @@ fn main() {
 
 ## Next
 
-- [`../wgsl-codegen`](../wgsl-codegen) — lower the same graph to WGSL for WebGPU
-- [`../energy-receipt`](../energy-receipt) — record picojoule cost per op
+- [`../wgsl-codegen`](../wgsl-codegen), lower the same graph to WGSL for WebGPU
+- [`../energy-receipt`](../energy-receipt), record picojoule cost per op

@@ -3,8 +3,8 @@ name = "flowg"
 version = "0.1.0"
 edition = "2021"
 rust-version = "1.74"
-description = "Typed FunctionGraph IR for heterogeneous inference — CPU + Apple Silicon Metal + WGPU + AMX. Stub installer; `cargo binstall flowg` fetches the real binary from GitHub Releases."
-license-file = "LICENSE"
+description = "Typed FunctionGraph IR for heterogeneous inference, CPU + Apple Silicon Metal + WGPU + AMX. Stub installer; `cargo binstall flowg` fetches the real binary from GitHub Releases."
+license = "MIT OR Apache-2.0"
 repository = "https://github.com/openIE-dev/flow-g"
 homepage = "https://openie-dev.github.io/flow-g"
 documentation = "https://openie-dev.github.io/flow-g"
@@ -12,7 +12,7 @@ readme = "../../README.md"
 keywords = ["energy", "compiler", "rust", "cli"]
 categories = ["command-line-utilities"]
 
-# Standalone package — not in any workspace
+# Standalone package, not in any workspace
 [workspace]
 
 [[bin]]

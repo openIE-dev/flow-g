@@ -3,7 +3,7 @@
 //! When invoked via `cargo binstall <name>`, cargo-binstall reads the
 //! `[package.metadata.binstall]` table in Cargo.toml, fetches the
 //! prebuilt binary from GitHub Releases, and replaces this stub with
-//! the real tool — no compilation required.
+//! the real tool, no compilation required.
 //!
 //! When invoked via `cargo install <name>`, cargo compiles this stub
 //! and the resulting binary just prints a hint pointing the user at

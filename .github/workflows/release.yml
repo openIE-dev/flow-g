@@ -11,9 +11,11 @@ on:
         required: true
         type: string
 
-# REPLACE these per-project:
+# The binaries are built from a private source repository (openIE-dev/joulesperbit).
+# This workflow needs the secret JOULESPERBIT_READ_TOKEN and cannot run for forks or
+# outside contributors. The public repository holds only the release surface.
 env:
-  # Path to the CLI crate inside joulesperbit
+  # Path to the CLI crate inside the private source repository
   CLI_CRATE_PATH: crates/flowg-cli
   # Name of the CLI binary that ends up in target/release/
   BIN_NAME: flowg
@@ -101,7 +103,7 @@ jobs:
             cp "joulesperbit/target/${{ matrix.target }}/release/${BIN_NAME}" "$STAGE/$BASE/"
           fi
 
-          cp LICENSE README.md "$STAGE/$BASE/" 2>/dev/null || true
+          cp LICENSE-MIT LICENSE-APACHE COPYRIGHT README.md "$STAGE/$BASE/"
 
           cd "$STAGE"
           if [ "${{ matrix.archive }}" = "zip" ]; then

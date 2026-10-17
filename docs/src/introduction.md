@@ -25,4 +25,4 @@ flowG is one of five public openIE-dev projects. All five share a common substra
 
 ## License
 
-flowG binaries are distributed under [BSL-1.1](https://github.com/openIE-dev/flow-g/blob/main/LICENSE). Documentation under CC-BY-4.0. Examples under Apache-2.0.
+flowG binaries, documentation and examples are licensed under MIT OR Apache-2.0 (see [COPYRIGHT](https://github.com/openIE-dev/flow-g/blob/main/COPYRIGHT)).

@@ -7,7 +7,7 @@ flowg run examples/energy-receipt/add.fg --record-energy receipt.json
 jq '.ops[] | {name, picojoules, target}' receipt.json
 ```
 
-Sample receipt fragment:
+Sample receipt fragment. The values are illustrative: they show the shape of a receipt, not a measurement from a run, and 12,480 pJ is not a reported result:
 
 ```json
 {

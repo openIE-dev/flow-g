@@ -6,7 +6,7 @@
 [![Quality](https://github.com/openIE-dev/flow-g/actions/workflows/quality.yml/badge.svg)](https://github.com/openIE-dev/flow-g/actions/workflows/quality.yml)
 [![Docs](https://github.com/openIE-dev/flow-g/actions/workflows/docs.yml/badge.svg)](https://openie-dev.github.io/flow-g)
 [![crates.io](https://img.shields.io/crates/v/flowg.svg)](https://crates.io/crates/flowg)
-[![License](https://img.shields.io/badge/license-BSL--1.1-blue.svg)](./LICENSE)
+[![License](https://img.shields.io/badge/license-MIT%20OR%20Apache--2.0-blue.svg)](./COPYRIGHT)
 
 
 flowG is the compiler IR + runtime substrate behind the openIE-dev ecosystem. It takes typed function graphs and dispatches them across CPU, Apple-silicon Metal, WGPU, AMX, and the OpDispatch backend family, with picojoule-budgeted per-op energy measurement built in.
@@ -21,7 +21,7 @@ This is the **public release surface**. Source is private at [`openIE-dev/flow-g
 
 ## Status
 
-> Release binaries + examples + documentation. flowG is **free to use software**, not an open-source project. See [LICENSE](./LICENSE) for the Business Source License 1.1 terms, which convert to Apache-2.0 four years after each binary's release date.
+> Release binaries, examples and documentation. flowG is licensed under MIT OR Apache-2.0 (see [COPYRIGHT](./COPYRIGHT), [LICENSE-MIT](./LICENSE-MIT) and [LICENSE-APACHE](./LICENSE-APACHE)). This repository holds the release surface and a stub installer; the release binaries are built from a source repository that is not public, so the compiler and runtime source cannot be read here.
 
 ## What you get
 
@@ -108,6 +108,4 @@ And the substrate is metered by [JouleDB](https://github.com/openIE-dev/jouledb)
 
 ## License
 
-- **Binaries**: Business Source License 1.1; see [LICENSE](./LICENSE). Free for non-commercial use, internal use by orgs under $1M revenue, security/academic research. Converts to Apache-2.0 four years after each release.
-- **Documentation**: CC-BY-4.0
-- **Examples**: Apache-2.0
+Copyright (c) 2026 Open Interface Engineering, Inc. Licensed under either of Apache License, Version 2.0 ([LICENSE-APACHE](./LICENSE-APACHE)) or the MIT license ([LICENSE-MIT](./LICENSE-MIT)), at your option, for the binaries, the documentation and the examples. Earlier releases and earlier versions of this README described the binaries as Business Source License 1.1; that no longer applies.

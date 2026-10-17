@@ -4,7 +4,12 @@ All notable changes to this release surface are documented here. Format follows 
 
 ## [Unreleased]
 
-## [0.1.0] — TBD
+### Changed
+- License is now MIT OR Apache-2.0 for the binaries, documentation and examples (it was Business Source License 1.1 for binaries, CC-BY-4.0 for documentation and Apache-2.0 for examples). Added LICENSE-MIT, LICENSE-APACHE and COPYRIGHT.
+- The release workflow states that it builds from a private source repository.
+- The sample receipt in examples/energy-receipt is labelled illustrative.
+
+## [0.1.0], TBD
 
 ### Added
 - Initial public release surface
