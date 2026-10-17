@@ -75,7 +75,7 @@ jobs:
           grep -q "Apache License" LICENSE-APACHE
           grep -q "MIT License" LICENSE-MIT
           test ! -f LICENSE
-          ! grep -rIl "Business Source License" --exclude-dir=.git . || (echo "stale BSL text found"; exit 1)
+          ! grep -rIl "Business Source License" --exclude-dir=.git --exclude=CHANGELOG.md --exclude=README.md --exclude=quality.yml . || (echo "stale BSL text found"; exit 1)
           echo "MIT OR Apache-2.0 files present, no BSL text"
       - name: Check stub Cargo.toml license field
         run: |
